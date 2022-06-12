@@ -1,8 +1,9 @@
 package wolfe.business;
 
+import wolfe.models.Adjacency;
 import wolfe.models.Rectangle;
 
-public class GeometryBO {
+public class RectangleBO {
 
   /**
    * Computes the intersection of two rectangles. Returns a new rectangle.
@@ -49,6 +50,43 @@ public class GeometryBO {
         return true;
       }
     return false;
+  }
+
+    /**
+   * Returns the adjacency type of two rectangles.
+   *
+   * @param r1 - the first rectangle
+   * @param r2 - the second rectangle
+   * @return an adjacency type {@link Adjacency}.
+   */
+  public Adjacency getAdjacency(Rectangle r1, Rectangle r2) {
+    if (r2.getX() != r1.getX() + r1.getWidth()) {
+      return Adjacency.NOT_ADJACENT;
+    }
+
+    if (
+      r2.getY() == r1.getY() &&
+      r2.getHeight() == r1.getHeight()) {
+        return Adjacency.PROPER;
+    }
+
+    if (
+      r2.getY() > r1.getY() &&
+      r2.getY() + r2.getHeight() < r1.getY() + r1.getHeight()
+    ) {
+      return Adjacency.SUB_LINE;
+    }
+
+    if (
+      (r2.getY() > r1.getY() &&
+      r2.getY() + r2.getHeight() > r1.getY() + r1.getHeight()) ||
+      (r2.getY() < r1.getY() &&
+      r2.getY() + r2.getHeight() < r1.getY() + r1.getHeight())
+    ) {
+      return Adjacency.PARTIAL;
+    }
+    return Adjacency.NOT_ADJACENT;
+
   }
 
 }
