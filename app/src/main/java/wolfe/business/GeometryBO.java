@@ -33,4 +33,22 @@ public class GeometryBO {
     (r1.getY() + r1.getHeight()) >= r2.getY();
   }
   
+    /**
+   * Returns the boolean of whether r2 is fully contained in r1.
+   *
+   * @param r1 - the first rectangle
+   * @param r2 - the second rectangle
+   * @return a boolean {@link Boolean}.
+   */
+  public Boolean isContained(Rectangle r1, Rectangle r2) {
+    if (
+      r2.getX() > r1.getX() && 
+      r2.getX() + r2.getWidth() < r1.getX() + r1.getWidth() &&
+      r2.getY() + r2.getHeight() < r1.getY() + r1.getHeight() &&
+      r2.getY() > r1.getY()) {
+        return true;
+      }
+    return false;
+  }
+
 }
