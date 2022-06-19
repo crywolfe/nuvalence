@@ -2,37 +2,66 @@ package wolfe.business;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import wolfe.models.Adjacency;
+import wolfe.models.Coordinate;
 import wolfe.models.Rectangle;
 
 public class RectangleBOTest {
 
 
   @Test
-  void test_rectangles_intersect() {
+  void test_rectangles_intersect_upperleft_lowerright() {
 
     Rectangle r1 = new Rectangle(5, 0, 10,4);
     Rectangle r2 = new Rectangle(8, 2, 9, 3);
-    Rectangle expected = new Rectangle(8, 2, 7, 2);
+    Coordinate c1 = new Coordinate(15,2);
+    Coordinate c2 = new Coordinate(8,4);
+    
+    List<Coordinate> expected = new ArrayList<Coordinate>();
+    expected.add(c1);
+    expected.add(c2);
 
     RectangleBO rectangleBO = new RectangleBO();
-    Rectangle intersection = rectangleBO.getIntersection(r1, r2);
-    System.out.println(intersection.toString());
+    List<Coordinate> intersectionPoints = rectangleBO.getIntersections(r1, r2);
+    System.out.println(intersectionPoints.toString());
 
-    assertEquals(expected, intersection);
+    assertEquals(expected, intersectionPoints);
 
+  }
+
+  @Test
+  void test_rectangles_intersect_lowerleft_upperright() {
+
+    Rectangle r1 = new Rectangle(5, 0, 10,4);
+    Rectangle r2 = new Rectangle(10, -1, 6, 2);
+    Coordinate c1 = new Coordinate(15,5);
+    Coordinate c2 = new Coordinate(10,0);
+    
+    List<Coordinate> expected = new ArrayList<Coordinate>();
+    expected.add(c1);
+    expected.add(c2);
+
+    RectangleBO rectangleBO = new RectangleBO();
+    List<Coordinate> intersectionPoints = rectangleBO.getIntersections(r1, r2);
+    System.out.println(intersectionPoints.toString());
+
+    assertEquals(expected, intersectionPoints);
   }
 
   @Test
   void test_rectangles_do_not_intersect() {
     Rectangle r1 = new Rectangle(5, 0, 10,4);
     Rectangle r2 = new Rectangle(20, 10,5, 3);
-    Rectangle expected = new Rectangle(0, 0, 0, 0);
+    List<Coordinate> expected = new ArrayList<>();
 
     RectangleBO rectangleBO = new RectangleBO();
-    Rectangle intersection = rectangleBO.getIntersection(r1, r2);
+    List<Coordinate> intersection = rectangleBO.getIntersections(r1, r2);
 
     assertEquals(expected, intersection);
   }

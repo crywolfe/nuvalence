@@ -1,32 +1,50 @@
 package wolfe.business;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import wolfe.models.Adjacency;
+import wolfe.models.Coordinate;
 import wolfe.models.Rectangle;
 
 public class RectangleBO {
 
   /**
-   * Computes the intersection of two rectangles. Returns a new rectangle.
-   * If they do not intersect, the result will be a rectangle of 0s.
+   * Computes the intersection of two rectangles. Returns coordinates of the intersected points.
+   * If they do not intersect, the result will be an empty list.
    *
    * @param r1 - the first rectangle
    * @param r2 - the second rectangle
    * @return a new rectangle {@link Rectangle} with x, y, width, height.
    */
-  public Rectangle getIntersection(Rectangle r1, Rectangle r2) {
+  public List<Coordinate> getIntersections(Rectangle r1, Rectangle r2) {
+    List<Coordinate> coordinates = new ArrayList<>();
   
-    if(!isIntersect(r1, r2)){
-      return new Rectangle(0,0,0,0);
+    if(!isIntersection(r1, r2)){
+      return coordinates;
     }
 
-    return new Rectangle(
-      Math.max(r1.getX(), r2.getX()), Math.max(r1.getY(), r2.getY()),
-      Math.min(r1.getX() + r1.getWidth(), r2.getX() + r2.getWidth()) - Math.max(r1.getX(), r2.getX()),
-      Math.min(r1.getY() + r1.getHeight(), r2.getY() + r2.getHeight()) - Math.max(r1.getY(), r2.getY())
-    );
+    // lr = lower right, ul = upper left, ur = upper right, ll = lower left
+    Coordinate lr = new Coordinate(r1.getX() + r1.getWidth(), r2.getY());
+    Coordinate ul = new Coordinate(r2.getX(), r1.getY() + r1.getHeight());
+    Coordinate ur = new Coordinate(r1.getX() + r1.getWidth(), r2.getY() + r2.getWidth());
+    Coordinate ll = new Coordinate(r2.getX(), r1.getY());
+
+    if (r1.getX() <= r2.getX()) {
+      if (r1.getY() < r2.getY()) {
+        coordinates.add(lr);
+        coordinates.add(ul);
+      } else {
+        coordinates.add(ur);
+        coordinates.add(ll);
+      }
+  } else return getIntersections(r2, r1);
+
+  return coordinates;
+
   }
 
-  private Boolean isIntersect(Rectangle r1, Rectangle r2) {
+  private Boolean isIntersection(Rectangle r1, Rectangle r2) {
     return 
     r1.getX() <= (r2.getX() + r2.getWidth()) && 
     (r1.getX() + r1.getWidth()) >= r2.getX() &&
