@@ -85,6 +85,24 @@ public class RectangleBOTest {
 
     assertEquals(expected, intersectionPoints);
   }
+
+  @Test
+  void test_rectangles_intersect_lower_left_bottom_lowerright_bottom() {
+
+    Rectangle r1 = new Rectangle(5, 0, 10,4);
+    Rectangle r2 = new Rectangle(8, -1, 5, 3);
+    Coordinate c1 = new Coordinate(8,0);
+    Coordinate c2 = new Coordinate(13,0);
+    
+    List<Coordinate> expected = new ArrayList<Coordinate>();
+    expected.add(c1);
+    expected.add(c2);
+
+    RectangleBO rectangleBO = new RectangleBO();
+    List<Coordinate> intersectionPoints = rectangleBO.getIntersections(r1, r2);
+
+    assertEquals(expected, intersectionPoints);
+  }
   
   @Test
   void test_rectangles_do_not_intersect() {

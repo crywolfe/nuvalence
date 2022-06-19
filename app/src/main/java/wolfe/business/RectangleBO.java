@@ -24,7 +24,7 @@ public class RectangleBO {
       return coordinates;
     }
 
-    // lr = lower right, ul = upper left, ur = upper right, ll = lower left, iur = inner upper right
+    // lr = lower right, ul = upper left, ur = upper right, ll = lower left, iur = inner upper right, illb = inner lower left bottom, illr = inner lower right bottom
     Coordinate lr = new Coordinate(r1.getX() + r1.getWidth(), r2.getY());
     Coordinate ul = new Coordinate(r2.getX(), r1.getY() + r1.getHeight());
     Coordinate ur = new Coordinate(r1.getX() + r1.getWidth(), r2.getY() + r2.getWidth());
@@ -37,12 +37,25 @@ public class RectangleBO {
       Math.min(r1.getX() + r1.getWidth(), r2.getX() + r2.getWidth()), 
       Math.min(r1.getY() + r1.getHeight(), r2.getY() + r2.getHeight())
     );
+    Coordinate illb = new Coordinate(
+      Math.max(r1.getX(), r2.getX()), 
+      Math.max(r1.getY(), r2.getY())
+    );
+    Coordinate ilrb = new Coordinate(
+      Math.min(r1.getX() + r1.getWidth(), r2.getX() + r2.getWidth()), 
+      Math.max(r1.getY(), r2.getY())
+    );
     
-
     if (r1.getX() <= r2.getX()) {
       if (r1.getY() < r2.getY() && r1.getY() + r1.getHeight() > r2.getY() + r2.getHeight()) {
         coordinates.add(iur);
         coordinates.add(ilr);
+      } else if (
+        r1.getY() > r2.getY() && 
+        r1.getY() + r1.getHeight() > r2.getY() + r2.getHeight() &&
+        r1.getX() + r1.getWidth() > r2.getX() + r2.getWidth()) {
+          coordinates.add(illb);
+          coordinates.add(ilrb);
       } else if (r1.getY() < r2.getY()) {
         coordinates.add(lr);
         coordinates.add(ul);
