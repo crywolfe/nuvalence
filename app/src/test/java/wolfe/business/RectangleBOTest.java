@@ -3,7 +3,6 @@ package wolfe.business;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -29,10 +28,8 @@ public class RectangleBOTest {
 
     RectangleBO rectangleBO = new RectangleBO();
     List<Coordinate> intersectionPoints = rectangleBO.getIntersections(r1, r2);
-    System.out.println(intersectionPoints.toString());
 
     assertEquals(expected, intersectionPoints);
-
   }
 
   @Test
@@ -49,11 +46,46 @@ public class RectangleBOTest {
 
     RectangleBO rectangleBO = new RectangleBO();
     List<Coordinate> intersectionPoints = rectangleBO.getIntersections(r1, r2);
-    System.out.println(intersectionPoints.toString());
 
     assertEquals(expected, intersectionPoints);
   }
 
+  @Test
+  void test_rectangles_intersect_upperleft_lowerloft() {
+
+    Rectangle r1 = new Rectangle(5, 0, 10,4);
+    Rectangle r2 = new Rectangle(8, -2, 9, 3);
+    Coordinate c1 = new Coordinate(15,7);
+    Coordinate c2 = new Coordinate(8,0);
+    
+    List<Coordinate> expected = new ArrayList<Coordinate>();
+    expected.add(c1);
+    expected.add(c2);
+
+    RectangleBO rectangleBO = new RectangleBO();
+    List<Coordinate> intersectionPoints = rectangleBO.getIntersections(r1, r2);
+
+    assertEquals(expected, intersectionPoints);
+  }
+
+  @Test
+  void test_rectangles_intersect_upperright_lowerright() {
+
+    Rectangle r1 = new Rectangle(5, 0, 10,4);
+    Rectangle r2 = new Rectangle(8, 1, 8, 2);
+    Coordinate c1 = new Coordinate(15,1);
+    Coordinate c2 = new Coordinate(15,3);
+    
+    List<Coordinate> expected = new ArrayList<Coordinate>();
+    expected.add(c1);
+    expected.add(c2);
+
+    RectangleBO rectangleBO = new RectangleBO();
+    List<Coordinate> intersectionPoints = rectangleBO.getIntersections(r1, r2);
+
+    assertEquals(expected, intersectionPoints);
+  }
+  
   @Test
   void test_rectangles_do_not_intersect() {
     Rectangle r1 = new Rectangle(5, 0, 10,4);
