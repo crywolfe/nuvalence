@@ -86,10 +86,10 @@ public class RectangleBO {
    */
   public Boolean isContained(Rectangle r1, Rectangle r2) {
     if (
-      r2.getX() > r1.getX() && 
-      r2.getX() + r2.getWidth() < r1.getX() + r1.getWidth() &&
-      r2.getY() + r2.getHeight() < r1.getY() + r1.getHeight() &&
-      r2.getY() > r1.getY()) {
+      r2.getX() >= r1.getX() && 
+      r2.getX() + r2.getWidth() <= r1.getX() + r1.getWidth() &&
+      r2.getY() + r2.getHeight() <= r1.getY() + r1.getHeight() &&
+      r2.getY() >= r1.getY()) {
         return true;
       }
     return false;

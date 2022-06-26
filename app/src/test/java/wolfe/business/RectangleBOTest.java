@@ -224,4 +224,16 @@ public class RectangleBOTest {
 
     assertEquals(expected, notAdjacent);
   }
+
+  @Test
+  void test_rectangle_is_contained_by_itself() {
+      Rectangle r1 = new Rectangle(5, 0, 10, 4);
+      Rectangle r2 = new Rectangle(5, 0, 10, 4);
+      Boolean expected = true;
+
+      RectangleBO rectangleBO = new RectangleBO();
+      Boolean contained = rectangleBO.isContained(r1, r2);
+
+      assertEquals(expected, contained);
+  }
 }
